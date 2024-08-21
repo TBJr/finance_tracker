@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Finance Tracker</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'tracker/style.css' %}">
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li><a href="{%  url 'transaction_list' %}">Transactions</a></li>
+                <li><a href="{%  url 'add_transaction' %}">Add Transaction</a></li>
+                <li><a href="{% url 'visualize_expenses' %}">Visualize Expenses</a></li>
+    
+                {%  if user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'register' %}">Register</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
+</html>
