@@ -1,0 +1,10 @@
+{% extends 'tracker/base.html' %}
+
+{% block content %}
+<h2>Your Transactions</h2>
+<ul>
+    {% for transaction in transactions %}
+    <li>{{  transaction.date }} - {{ transaction.amount }} - {{ transaction.category }} - {{ transaction.transaction_type }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
