@@ -1,3 +1,6 @@
+import matplotlib
+matplotlib.use('Agg') # Use a non-interactive backend
+
 import base64
 from io import BytesIO
 
@@ -5,7 +8,7 @@ import matplotlib.pyplot as plt
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, TransactionForm
 from .models import Transaction, Category
 from django.db.models import Sum
 
@@ -34,20 +37,24 @@ def visualize_expenses(request):
     categories = [t.category.name for t in transactions]
     amounts = [t.amount for t in transactions]
 
+    # Create the plot
     plt.figure(figsize=(10, 5))
     plt.bar(categories, amounts)
     plt.xlabel('Category')
+    plt.ylabel('Amount')
     plt.title('Expenses by Category')
 
+    # Save it to a buffer
     buffer = BytesIO()
     plt.savefig(buffer, format='png')
     buffer.seek(0)
     image_png = buffer.getvalue()
     buffer.close()
 
-    image = base64.b64encode(image_png)
-    image = image.decode('utf-8')
+    # Encode the image to base64 so it can be rendered in the HTML
+    image = base64.b64encode(image_png).decode('utf-8')
 
+    # Pass the image to the template
     return render(request, 'tracker/visualize.html', {'image': image})
 
 def add_transaction(request):
