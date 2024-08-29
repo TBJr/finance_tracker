@@ -1,17 +1,22 @@
 {% extends 'tracker/base.html' %}
 
 {% block content %}
-    <div class="container">
-        <h2>User Profile</h2>
-        <p><strong>Username:</strong> {{ user.username }}</p>
-        <p><strong>Email:</strong> {{ user.email }}</p>
+    <div class="container mt-4">
+        <h2 class="mb-4">User Profile</h2>
+        <div class="card mb-4">
+            <div class="card-body">
+                <p class="card-text"><strong>Username:</strong> {{ user.username }}</p>
+                <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
+            </div>
+        </div>
 
-        <br />
-
-        <h3>Password Information</h3>
-        <p>Your password is securely stored and cannot be retrieved. If you forget your password, you can reset it using the link below.</p>
-        <p><a href="{% url 'password_reset' %}">Reset your password</a></p>
-
-        <p><a href="{% url 'home' %}">Go back to Home</a></p>
+        <h3 class="mb-3">Password Information</h3>
+        <div class="alert alert-info mb-4" role="alert">
+            Your password is securely stored and cannot be retrieved. If you forget your password, you can reset it using the link below.
+        </div>
+        <div>
+            <a href="{% url 'password_reset' %}" class="btn btn-sm btn-primary">Reset your password</a>
+            <a href="{% url 'home' %}" class="btn btn-sm btn-secondary">Go back to Home</a>
+        </div>
     </div>
 {% endblock %}

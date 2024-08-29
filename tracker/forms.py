@@ -13,8 +13,11 @@ class UserRegistrationForm(UserCreationForm):
 class TransactionForm(forms.ModelForm):
     class Meta:
         model = Transaction
-        fields = ['category', 'amount', 'transaction_type', 'date', 'description'] # Ensure 'date' is included
+        fields = ['date', 'amount', 'category', 'transaction_type', 'description'] # Ensure 'date' is included
         widgets = {
-            'description': forms.Textarea(attrs={'rows': 3}),
-            'date': forms.DateInput(attrs={'type': 'date'}),  # Date picker widget
+            'date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'amount': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Amount'}),
+            'category': forms.Select(attrs={'class': 'form-control'}),
+            'transaction_type': forms.Select(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
         }
