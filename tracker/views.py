@@ -1,4 +1,10 @@
 import matplotlib
+import openpyxl
+from django.http import HttpResponse
+from openpyxl.styles import Font
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+
 matplotlib.use('Agg') # Use a non-interactive backend
 
 import base64
@@ -111,3 +117,54 @@ def home(request):
 @login_required
 def profile(request):
     return render(request, 'tracker/profile.html')
+
+@login_required
+def export_transactions_pdf(request):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="transactions_report.pdf"'
+
+    p = canvas.Canvas(response, pagesize=letter)
+    p.setTitle('Transactions Report')
+
+    transactions = Transaction.objects.filter(user=request.user)
+
+    p.drawString(100, 750, 'Transactions Report')
+    p.drawString(100, 730, '----------------------------------------')
+
+    y = 710
+    for transaction in transactions:
+        p.drawString(100, y, f'{transaction.date} - {transaction.transaction_type} - {transaction.amount}')
+        y -= 20
+
+    p.showPage()
+    p.save()
+
+    return response
+
+@login_required
+def export_transactions_excel(request):
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename="transactions_report.xlsx"'
+
+    workbook = openpyxl.Workbook()
+    worksheet = workbook.active
+    worksheet.title = 'Transactions Report'
+
+    # Define the header row
+    headers = ['Date', 'Transaction Type', 'Amount', 'Category', 'Description']
+    for col_num, header in enumerate(headers, 1):
+        cell = worksheet.cell(row=1, column=col_num)
+        cell.value = header
+        cell.font = Font(bold=True)
+
+    # Add the data rows
+    transactions = Transaction.objects.filter(user=request.user)
+    for row_num, transaction in enumerate(transactions, 2):
+        worksheet.cell(row=row_num, column=1).value = transaction.date.strftime('%Y-%m-%d')
+        worksheet.cell(row=row_num, column=2).value = transaction.transaction_type
+        worksheet.cell(row=row_num, column=3).value = transaction.amount
+        worksheet.cell(row=row_num, column=4).value = transaction.category.name if transaction.category else ''
+        worksheet.cell(row=row_num, column=5).value = transaction.description
+
+    workbook.save(response)
+    return response
