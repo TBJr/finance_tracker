@@ -2,10 +2,13 @@
 
 {% block content %}
     <div class="container mt-4">
-        <h2 class="mb-4">Your Transactions</h2>
-        <a href="{% url 'export_transactions_pdf' %}" class="btn btn-primary">Export as PDF</a>
-        <a href="{% url 'export_transactions_excel' %}" class="btn btn-success">Export as Excel</a>
-
+        <h2 class="mb-3 d-flex justify-content-between align-items-center">
+            Personal Transactions
+            <span>
+                <a href="{% url 'export_transactions_pdf' %}" class="btn btn-sm btn-primary">Export as PDF</a>
+                <a href="{% url 'export_transactions_excel' %}" class="btn btn-sm btn-success">Export as Excel</a>
+            </span>
+        </h2>
 
         <div class="table-responsive">
             <table class="table table-striped">
