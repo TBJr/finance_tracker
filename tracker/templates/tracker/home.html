@@ -1,17 +1,28 @@
 {% extends 'tracker/base.html' %}
 
 {% block content %}
-    <div class="container mt-4">
-        <h1 class="mb-4">Welcome to Your Personal Finance Tracker!</h1>
-        <p class="mb-4">Manage your finances effortlessly. Track your income and expenses, visualize your spending habits, and stay on top of your financial goals.</p>
+    <div class="container mt-4" xmlns="http://www.w3.org/1999/html">
+        <div class="text-center align-items-center">
+            <h1 class="mb-4">Welcome to Your Personal Finance Tracker!</h1>
+            <p class="mb-4">Manage your finances effortlessly. Track your income and expenses, visualize your spending habits, and stay on top of your financial goals.</p>
 
-        <div class="d-flex flex-column flex-md-row mb-4">
-            <a href="{% url 'transaction_list' %}" class="btn btn-primary me-md-2 mb-2 mb-md-0">View Transactions</a>
-            <a href="{% url 'add_transaction' %}" class="btn btn-success me-md-2 mb-2 mb-md-0">Add Transaction</a>
-            <a href="{% url 'visualize_expenses' %}" class="btn btn-info mb-2 mb-md-0">Visualize Expenses</a>
+            <div class="flex-column flex-md-row mb-4">
+                <a href="{% url 'transaction_list' %}" class="btn btn-primary me-md-2 mb-2 mb-md-0">View Transactions</a>
+                <a href="{% url 'add_transaction' %}" class="btn btn-success me-md-2 mb-2 mb-md-0">Add Transaction</a>
+                <a href="{% url 'visualize_expenses' %}" class="btn btn-info mb-2 mb-md-0">Visualize Expenses</a>
+            </div>
         </div>
 
-        <h2 class="mb-3">Recent Transactions</h2>
+        <hr>
+
+        <h2 class="mb-3 d-flex justify-content-between align-items-center">
+            Recent Transactions
+            <span>
+                <a href="{% url 'export_transactions_pdf' %}" class="btn btn-sm btn-primary">Export as PDF</a>
+                <a href="{% url 'export_transactions_excel' %}" class="btn btn-sm btn-success">Export as Excel</a>
+            </span>
+        </h2>
+
         <div class="table-responsive mb-4">
             <table class="table table-striped">
                 <thead class="table-dark">
@@ -38,12 +49,16 @@
         </div>
         <a href="{% url 'transaction_list' %}" class="btn btn-secondary mb-4">View All Transactions</a>
 
+        <hr>
+
         <h2 class="mb-3">Financial Summary</h2>
         <div class="alert alert-light border mb-4">
             <p><strong>Income:</strong> ${{ income }}</p>
             <p><strong>Expenses:</strong> ${{ expenses }}</p>
             <p><strong>Net Savings:</strong> ${{ savings }}</p>
         </div>
+
+        <hr>
 
         <h2 class="mb-3">Top Spending Categories</h2>
         <ul class="list-group mb-4">
