@@ -3,17 +3,21 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     color: #333;
+    margin: 0;
+    padding: 0;
 }
 
-/* Container Stylings */
+/* Container Styling */
 .container {
     width: 80%;
     margin: 0 auto;
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
 }
 
+/* Headings */
 h1, h2 {
     color: #444;
 }
@@ -46,7 +50,8 @@ nav ul li a {
     transition: background-color 0.3s;
 }
 
-nav ul li a:hover {
+nav ul li a:hover,
+nav ul li a:focus {
     background-color: #555;
     color: #fff;
 }
@@ -73,6 +78,7 @@ nav ul li a:hover {
     border-radius: 4px;
     margin: 5px;
     font-weight: bold;
+    transition: background-color 0.3s;
 }
 
 .btn-primary {
@@ -134,4 +140,35 @@ nav ul li a:hover {
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1200px) {
+    .container {
+        width: 90%;
+    }
+
+    nav ul li {
+        display: block;
+        margin: 5px 0;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .container {
+        width: 100%;
+    }
+
+    nav ul {
+        text-align: left;
+    }
+
+    nav ul li {
+        display: inline-block;
+        margin: 0;
+    }
+
+    nav ul li a {
+        padding: 8px 10px;
+    }
 }
