@@ -1,54 +1,54 @@
 {% extends 'tracker/base.html' %}
 
 {% block content %}
-<div class="container">
-    <h1>Welcome to Your Personal Finance Tracker!</h1>
-    <p>Manage your finances effortlessly. Track your income and expenses, visualize your spending habits, and stay on top of your financial goals.</p>
+    <div class="container">
+        <h1>Welcome to Your Personal Finance Tracker!</h1>
+        <p>Manage your finances effortlessly. Track your income and expenses, visualize your spending habits, and stay on top of your financial goals.</p>
 
-    <div class="navigation-links">
-        <a href="{% url 'transaction_list' %}" class="btn btn-primary">View Transactions</a>
-        <a href="{% url 'add_transaction' %}" class="btn btn-success">Add Transaction</a>
-        <a href="{% url 'visualize_expenses' %}" class="btn btn-info">Visualize Expenses</a>
-    </div>
+        <div class="navigation-links">
+            <a href="{% url 'transaction_list' %}" class="btn btn-primary">View Transactions</a>
+            <a href="{% url 'add_transaction' %}" class="btn btn-success">Add Transaction</a>
+            <a href="{% url 'visualize_expenses' %}" class="btn btn-info">Visualize Expenses</a>
+        </div>
 
-    <h2>Recent Transactions</h2>
-    <table class="transaction-table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Category</th>
-                <th>Type</th>
-                <th>Amount</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for transaction in transactions %}
-            <tr>
-                <td>{{ transaction.date }}</td>
-                <td>{{ transaction.category }}</td>
-                <td>{{ transaction.transaction_type }}</td>
-                <td>${{ transaction.amount }}</td>
-                <td>{{ transaction.description }}</td>
-            </tr>
+        <h2>Recent Transactions</h2>
+        <table class="transaction-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction in transactions %}
+                <tr>
+                    <td>{{ transaction.date }}</td>
+                    <td>{{ transaction.category }}</td>
+                    <td>{{ transaction.transaction_type }}</td>
+                    <td>${{ transaction.amount }}</td>
+                    <td>{{ transaction.description }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'transaction_list' %}" class="btn btn-secondary">View All Transactions</a>
+
+        <h2>Financial Summary</h2>
+        <div class="summary">
+            <p><strong>Income:</strong> ${{ income }}</p>
+            <p><strong>Expenses:</strong> ${{ expenses }}</p>
+            <p><strong>Net Savings:</strong> ${{ savings }}</p>
+        </div>
+
+        <h2>Top Spending Categories</h2>
+        <ul class="category-list">
+            {% for category in top_categories %}
+            <li>{{ category.category__name }} - ${{ category.total_amount }}</li>
             {% endfor %}
-        </tbody>
-    </table>
-    <a href="{% url 'transaction_list' %}" class="btn btn-secondary">View All Transactions</a>
-
-    <h2>Financial Summary</h2>
-    <div class="summary">
-        <p><strong>Income:</strong> ${{ income }}</p>
-        <p><strong>Expenses:</strong> ${{ expenses }}</p>
-        <p><strong>Net Savings:</strong> ${{ savings }}</p>
+        </ul>
+        <a href="{% url 'visualize_expenses' %}" class="btn btn-info">Visualize More</a>
     </div>
-
-    <h2>Top Spending Categories</h2>
-    <ul class="category-list">
-        {% for category in top_categories %}
-        <li>{{ category.category__name }} - ${{ category.total_amount }}</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'visualize_expenses' %}" class="btn btn-info">Visualize More</a>
-</div>
 {% endblock %}

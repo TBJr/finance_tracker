@@ -27,7 +27,6 @@ def register(request):
         form = UserRegistrationForm()
     return render(request, 'tracker/register.html', {'form': form})
 
-
 def transaction_list(request):
     transactions = Transaction.objects.filter(user=request.user)
     return render(request, 'tracker/transaction_list.html', {'transactions': transactions})
