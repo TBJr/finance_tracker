@@ -1,8 +1,9 @@
 {% extends 'tracker/base.html' %}
 
 {% block content %}
-    <div class="container">
-        <h2>Expense by Category</h2>
-        <img src="data:image/png;base64,{{ image }}" alt="Expenses by Category">
+    <div class="container mt-4">
+        <h2 class="mb-4">Expenses by Category</h2>
+        <!-- Add a class to ensure the image is responsive -->
+        <img src="data:image/png;base64,{{ image }}" alt="Expenses by Category" class="img-fluid">
     </div>
 {% endblock %}
