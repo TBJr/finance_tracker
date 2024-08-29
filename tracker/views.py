@@ -27,10 +27,12 @@ def register(request):
         form = UserRegistrationForm()
     return render(request, 'tracker/register.html', {'form': form})
 
+@login_required
 def transaction_list(request):
     transactions = Transaction.objects.filter(user=request.user)
     return render(request, 'tracker/transaction_list.html', {'transactions': transactions})
 
+@login_required
 def visualize_expenses(request):
     transactions = Transaction.objects.filter(user=request.user, transaction_type='expense')
     categories = [t.category.name for t in transactions]
@@ -56,14 +58,17 @@ def visualize_expenses(request):
     # Pass the image to the template
     return render(request, 'tracker/visualize.html', {'image': image})
 
+@login_required
 def add_transaction(request):
     if request.method == 'POST':
         form = TransactionForm(request.POST)
         if form.is_valid():
             transaction = form.save(commit=False)
-            transaction.user = request.user
+            transaction.user = request.user # Assign the current user to the transaction
             transaction.save()
             return redirect('transaction_list')
+        else:
+            print(form.errors)  # Debug: Print form errors to console
     else:
         form = TransactionForm()
     return render (request, 'tracker/add_transaction.html', {'form': form})
