@@ -3,6 +3,9 @@
 {% block content %}
     <div class="container mt-4">
         <h2 class="mb-4">Your Transactions</h2>
+        <a href="{% url 'export_transactions_pdf' %}" class="btn btn-primary">Export as PDF</a>
+        <a href="{% url 'export_transactions_excel' %}" class="btn btn-success">Export as Excel</a>
+
 
         <div class="table-responsive">
             <table class="table table-striped">
