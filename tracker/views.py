@@ -93,3 +93,7 @@ def home(request):
         })
     else:
         return render(request, 'tracker/home.html')
+
+@login_required
+def profile(request):
+    return render(request, 'tracker/profile.html')

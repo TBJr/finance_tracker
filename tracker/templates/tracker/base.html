@@ -9,12 +9,20 @@
     <body>
         <nav>
             <ul>
+                <li><a href="{% url 'home' %}">Home</a> </li>
                 <li><a href="{%  url 'transaction_list' %}">Transactions</a></li>
                 <li><a href="{%  url 'add_transaction' %}">Add Transaction</a></li>
                 <li><a href="{% url 'visualize_expenses' %}">Visualize Expenses</a></li>
     
                 {%  if user.is_authenticated %}
-                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                    <li><a href="{% url 'profile' %}">Profile</a></li>
+                    <li>
+                        <a href="#" onclick="document.getElementById('logout-form').submit(); return false;">Logout</a>
+                        <form id="logout-form" method="POST" action="{% url 'logout' %}" style="display: none;">
+                            {% csrf_token %}
+                        </form>
+                    </li>
+                    {#<li><a href="{% url 'logout' %}">Logout</a></li>#}
                 {% else %}
                     <li><a href="{% url 'login' %}">Login</a></li>
                     <li><a href="{% url 'register' %}">Register</a></li>
