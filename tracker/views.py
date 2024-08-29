@@ -17,14 +17,24 @@ def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
+            # Save the new user
+            user = form.save()
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
+
+            # Authenticate the user
             user = authenticate(username=username, password=password)
-            login(request, user)
-            return redirect('transaction_list')
+            if user is not None:
+                # Log the user in
+                login(request, user)
+                # Redirect to the transaction list
+                return redirect('transaction_list')
+            else:
+                # Handle the case where authentication fails
+                form.add_error(None, 'Authentication failed. Please try again.')
     else:
         form = UserRegistrationForm()
+
     return render(request, 'tracker/register.html', {'form': form})
 
 @login_required
