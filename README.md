@@ -86,5 +86,5 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contact
 
-For any inquiries or issues, please contact [Thomas](mailto:info@evolvtech-gambia.com).
+For any inquiries or issues, please contact [TBJr](mailto:info@evolvtech-gambia.com).
 
